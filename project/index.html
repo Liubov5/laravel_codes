@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav>
+        <a href="#" data-target="slide-out" class="sidenav-trigger">
+            <div class="row">
+                <div class="col"><i class="material-icons">menu</i></div>
+
+            </div>
+        </a>
+    </nav>
+
+    <ul id="slide-out" class="sidenav">
+        <br>
+        <li>
+            <a href="index.html">
+                <h4 class="center-align">Бюро находок</h4>
+            </a>
+        </li>
+        <br>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a href="found.html"><i class="material-icons">error</i>Найдено</a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a href="lost.html"><i class="material-icons">error_outline</i>Потеряно</a></li>
+        <li><a href="" class="btn">Подать объявление</a></li>
+    </ul>
+    <div class="row">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">search</i>
+                    <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+                    <label for="icon_prefix2">Поиск</label>
+                    <div class="btn" id="target">Найти</div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.sidenav').sidenav();
+            $("#target").click(function() {
+                
+            });
+        });
+        $.ajax({
+        url: 'http://127.0.0.1:8000/lol',
+        data: {
+            suc: "Успешно!"
+        },
+        success: function(arg) {
+            console.log(arg);
+            for (var i = 0; i < arg.length; i++) {
+                var div_row = document.createElement("div");
+                document.body.appendChild(div_row);
+                div_row.classList.add('row');
+
+                var div_row_card = document.createElement("div");
+                div_row.appendChild(div_row_card);
+                div_row_card.classList.add('col', 's12', 'm6');
+
+                var div_row_1 = document.createElement("div");
+                div_row_card.appendChild(div_row_1);
+                div_row_1.classList.add('card', 'blue-grey', 'darken-1');
+
+                var div_row_2 = document.createElement("div");
+                div_row_1.appendChild(div_row_2);
+                div_row_2.classList.add('card-content', 'white-text');
+
+                var div_row_span = document.createElement("span");
+                div_row_2.appendChild(div_row_span);
+                div_row_span.classList.add('card-title');
+                div_row_span.innerHTML = arg[i].title;
+
+                var div_row_p = document.createElement("p");
+                div_row_2.appendChild(div_row_p);
+                div_row_p.innerHTML = arg[i].description;
+
+                var div_br = document.createElement("br");
+                div_row_2.appendChild(div_br);
+
+                var div_row_cont = document.createElement("p");
+                div_row_2.appendChild(div_row_cont);
+                div_row_cont.innerHTML = "Контакт для связи: " + arg[i].contact;
+            }
+        }
+        });
+
+    </script>
+</body>
+
+</html>
